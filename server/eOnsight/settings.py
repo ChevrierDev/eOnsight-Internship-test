@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+import sys
 from pathlib import Path
 from decouple import config
+from django.db import connection
 
 #import GDAL and GEOS library to work with Geospatial data format
 GDAL_LIBRARY_PATH = os.getenv('GDAL_LIBRARY_PATH', 'C:/OSGeo4W/bin/gdal309.dll')
@@ -92,6 +94,24 @@ DATABASES = {
         "PORT": config('DB_PORT'),
     }
 }
+
+#Create DB for test environnement
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.contrib.gis.db.backends.postgis',
+            'NAME': 'test_bridge_db',
+            'USER': config('TEST_DB_USER'),
+            'PASSWORD': config('TEST_DB_PASSWORD'), 
+            'HOST': config('DB_HOST'),
+            'PORT': config('DB_PORT'),
+        }
+    }
+
+    # if no PostGIS extension on test create it 
+    def ensure_postgis_extension():
+        with connection.cursor() as cursor:
+            cursor.execute("CREATE EXTENSION IF NOT EXISTS postgis")
 
 
 # Password validation
