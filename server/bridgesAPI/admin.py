@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import Bridge
 
-# Register your models here.
+#register Bridge model with admin interface
+admin.site.register(Bridge)
