@@ -3,6 +3,9 @@ venv/
 env/
 djangoenv/
 
+#env file
+.env
+
 # Fichiers Python compilés
 *.pyc
 *.pyo
