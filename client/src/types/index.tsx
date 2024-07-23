@@ -1,5 +1,5 @@
 //define types for Bridges object
-export interface Bridge {
+export interface Bridges {
     readonly id: number;
     name: string;
     location: GeoLocation;
