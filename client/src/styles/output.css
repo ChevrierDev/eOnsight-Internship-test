@@ -553,13 +553,3 @@ video {
   --tw-contain-paint:  ;
   --tw-contain-style:  ;
 }
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-}
-
-.text-green-700 {
-  --tw-text-opacity: 1;
-  color: rgb(21 128 61 / var(--tw-text-opacity));
-}
