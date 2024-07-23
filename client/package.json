@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build-css": "tailwindcss build -i ./src/index.css -o ./src/output.css", 
-    "watch-css": "tailwindcss build -i ./src/index.css -o ./src/output.css --watch", 
+    "build-css": "tailwindcss build -i ./src/styles/index.css -o ./src/styles/output.css", 
+    "watch-css": "tailwindcss build -i ./src/styles/index.css -o ./src/styles/output.css --watch", 
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
