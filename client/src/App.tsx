@@ -1,14 +1,14 @@
-import './styles/output.css'
+import './styles/output.css';
+import React from 'react';
+import Dashboard from './pages/Dashboard'
 
-function App() {
+
+const App: React.FC = () => {
   return (
-    <>
-      <div >
-        <h1 className=''>Hello worldsdsdfezfe</h1>
-      </div>
-    </>
-  )
-}
+    <div className="app">
+      <Dashboard />
+    </div>
+  );
+};
 
-export default App
-
+export default App;
