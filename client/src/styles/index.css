@@ -8,4 +8,12 @@
 input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(360deg);
 }
-  
+
+.group:hover .svg-hover {
+    @apply text-buttonPrimary;
+}
+
+.group:hover .svg-hover path {
+    fill: var(--buttonPrimary); 
+    stroke: var(--buttonPrimary);
+}
