@@ -11,9 +11,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .group:hover .svg-hover {
     @apply text-buttonPrimary;
-}
-
-.group:hover .svg-hover path {
-    fill: var(--buttonPrimary); 
+  }
+  
+  .group:hover .svg-hover path {
+    fill: var(--buttonPrimary);
     stroke: var(--buttonPrimary);
-}
+  }
+  
+  .group:hover .svg-hover g path {
+    fill: var(--buttonPrimary);
+    stroke: var(--buttonPrimary);
+  }
+  

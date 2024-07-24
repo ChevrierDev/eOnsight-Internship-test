@@ -7,7 +7,7 @@ const Header: React.FC = () => {
       <img src={logo} alt="Logo" className="w-16 h-16 ml-10 md:w-24 md:h-24 bg-red" />
 
       {/* Mobile nav menu */}
-      <div className="flex items-center justify-around w-4/5 bg-red-600 md:hidden">
+      <div className="flex items-center justify-around w-[60%] md:hidden mx-auto">
         <button className="group w-10 h-10">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48" className="w-6 h-6 fill-current svg-hover">
             <path fill="white" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.1520" d="M4 19v14h8c0-6.627 5.373-12 12-12s12 5.373 12 12h8V19s-12.035-4-20-4-20 4-20 4"/>
@@ -21,11 +21,8 @@ const Header: React.FC = () => {
         </button>
 
         <button className="group w-10 h-10">
-          <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" className="w-6 h-6 fill-current svg-hover">
-            <g fill="none" stroke="white">
-              <path d="M17.5 11A4.501 4.501 0 0 0 13 6.5V11z"/>
-              <path d="M11 8.5a4.5 4.5 0 1 0 4.5 4.5H11z"/>
-            </g>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16" className="w-6 h-6 fill-current svg-hover">
+            <path fill="white" fillRule="evenodd" d="M10 6h3.9A5.01 5.01 0 0 0 10 2.1zm0-4.917A6.005 6.005 0 0 1 15 7H9V1q.511 0 1 .083M7 8l1 1h4.9A5.002 5.002 0 0 1 3 8a5 5 0 0 1 4-4.9zm1 6a6 6 0 0 0 6-6H8V2q-.511 0-1 .083A6.002 6.002 0 0 0 8 14" clipRule="evenodd"/>
           </svg>
         </button>
       </div>

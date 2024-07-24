@@ -7,6 +7,7 @@ import BridgeForm from '../components/BridgeForm.tsx';
 import useBridges from '../hooks/useBridges';
 import { Status, Bridges } from '../types/index.tsx';
 import { toast } from 'react-toastify';
+import BridgeTableMobile from '../components/BridgeTableMobile'; // Assurez-vous que le chemin est correct
 
 const Dashboard: React.FC = () => {
   const { bridges, addBridge, updateBridge, deleteBridge } = useBridges();
@@ -73,25 +74,29 @@ const Dashboard: React.FC = () => {
 
   const handleDeleteBridgeClick = async (id: number) => {
     await deleteBridge(id);
-    toast.info('Bridge deleted successfully');
   };
 
   return (
     <AppLayout>
       <Header />
-      <div className='flex flex-col lg:flex-row justify-between space-x-4 px-4'>
+      <div className='flex flex-col lg:flex-row justify-between space-x-4 md:px-4'>
         <div className="flex flex-col w-full lg:w-full space-y-8">
-          <PieChart data={statusData} className="w-[25rem] h-[25rem] mx-auto lg:mx-auto " />
+          <PieChart data={statusData} className="hidden w-[25rem] h-[25rem] mx-auto lg:mx-auto md:block" />
           <BridgeTable
-            className='w-full'
+            className='w-full hidden md:block'
             onAddBridgeClick={() => {
               setFormOpen(true);
               setBridgeToEdit(null);
               toast.info('You are in add mode');
             }}
             onEditBridgeClick={handleEditBridgeClick}
-            onDeleteBridgeClick={handleDeleteBridgeClick} // Pass handleDeleteBridgeClick to BridgeTable
+            onDeleteBridgeClick={handleDeleteBridgeClick}
             bridges={bridges}
+          />
+          <BridgeTableMobile
+            className='w-full block md:hidden'
+            bridges={bridges}
+            onDeleteBridge={handleDeleteBridgeClick}
           />
         </div>
         {isFormOpen && (
