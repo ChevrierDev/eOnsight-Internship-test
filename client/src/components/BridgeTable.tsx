@@ -1,43 +1,73 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import action from "../assets/action.svg";
 import OpenAddBridgeFormButton from '../components/OpenAddBridgeFormButton';
-import useBridges from '../hooks/useBridges';
+import { Bridges } from '../types/index';
 import { parseLocation } from '../utils/parseLocation';
+import ConfirmationModal from '../components/ConfirmationModal';
 
-const BridgeTable: React.FC = () => {
+interface BridgeTableProps {
+  className?: string;
+  onAddBridgeClick: () => void;
+  onEditBridgeClick: (bridge: Bridges) => void;
+  onDeleteBridgeClick: (id: number) => void;
+  bridges: Bridges[];
+}
+
+const BridgeTable: React.FC<BridgeTableProps> = ({ className, onAddBridgeClick, onEditBridgeClick, onDeleteBridgeClick, bridges }) => {
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const { bridges, isLoading, error, deleteBridge } = useBridges();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [bridgeToDelete, setBridgeToDelete] = useState<number | null>(null);
+  const dropdownRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const handleButtonClick = (id: number) => {
+  const handleButtonClick = useCallback((id: number) => {
     setDropdownOpen(dropdownOpen === id ? null : id);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setDropdownOpen(null);
-    }
-  };
+  }, [dropdownOpen]);
 
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownOpen !== null) {
+        const ref = dropdownRefs.current[dropdownOpen];
+        if (ref && !ref.contains(event.target as Node)) {
+          setDropdownOpen(null);
+        }
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [dropdownOpen]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const handleDeleteClick = (id: number) => {
+    setBridgeToDelete(id);
+    setIsModalOpen(true);
+    setDropdownOpen(null);
+    setTimeout(() => {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth',
+      });
+    }, 300);
+  };
+
+  const confirmDelete = () => {
+    if (bridgeToDelete !== null) {
+      onDeleteBridgeClick(bridgeToDelete);
+      setIsModalOpen(false);
+      setBridgeToDelete(null); 
+    }
+  };
 
   return (
-    <div className='bg-tableBg py-4 mt-40 w-[70%] h-fit bottom-0 ml-4 rounded-md flex flex-col px-5'>
+    <div className={`bg-tableBg rounded-md flex flex-col px-5 ${className}`}>
       <div className="flex items-center justify-between w-full py-2">
         <div className='flex flex-col space-y-2'>
           <h1 className="font-lato tracking-wide font-bold text-base text-white">Bridge Status Overview</h1>
           <p className="font-lato tracking-wide text-sm text-textSecondary/75">Current Conditions and Traffic Data</p>
         </div>
         <div className='text-white'>
-          <OpenAddBridgeFormButton />
+          <OpenAddBridgeFormButton onClick={onAddBridgeClick} />
         </div>
       </div>
 
@@ -66,7 +96,7 @@ const BridgeTable: React.FC = () => {
             </tr>
           </thead>
           <tbody className='divide-y divide-white/5'>
-            {bridges.map((bridge) => {
+            {bridges.map((bridge, index) => {
               const { latitude, longitude } = parseLocation(bridge.location);
               return (
                 <tr key={bridge.id}>
@@ -86,21 +116,24 @@ const BridgeTable: React.FC = () => {
                     {bridge.traffic_load}
                   </td>
                   <td className="relative px-6 py-4">
-                    <div className="relative" ref={dropdownRef}>
-                      <button className="focus:outline-none" onClick={() => handleButtonClick(bridge.id)}>
+                    <div className="relative" ref={el => dropdownRefs.current[index] = el}>
+                      <button className="focus:outline-none" onClick={() => handleButtonClick(index)}>
                         <img src={action} alt="action button" />
                       </button>
-                      {dropdownOpen === bridge.id && (
+                      {dropdownOpen === index && (
                         <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-20">
                           <button
                             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
-                            onClick={() => console.log('Edit')}
+                            onClick={() => {
+                              onEditBridgeClick(bridge);
+                              setDropdownOpen(null); 
+                            }}
                           >
                             Edit
                           </button>
                           <button
                             className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
-                            onClick={() => deleteBridge(bridge.id)}
+                            onClick={() => handleDeleteClick(bridge.id)}
                           >
                             Delete
                           </button>
@@ -114,6 +147,11 @@ const BridgeTable: React.FC = () => {
           </tbody>
         </table>
       </div>
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onConfirm={confirmDelete}
+      />
     </div>
   );
 };

@@ -10,7 +10,7 @@ class BridgeList(generics.ListCreateAPIView):
     queryset = Bridge.objects.all()
     serializer_class = BridgeSerializers
     filter_backends = [DjangoFilterBackend]
-    filterset_class = BridgeFilter  # Utiliser le filtre personnalisé
+    filterset_class = BridgeFilter 
 
 # Retrieve Bridge details, update, delete or post Bridge
 class BridgeDetails(generics.RetrieveUpdateDestroyAPIView):

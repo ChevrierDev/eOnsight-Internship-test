@@ -18,8 +18,12 @@ function useBridges() {
     setLoading(true);
     setError(null);
     try {
-      const fetchedBridges = await httpGetBridges();
-      setBridges(fetchedBridges);
+      const response = await httpGetBridges();
+      if (response && Array.isArray(response.results)) {
+        setBridges(response.results);
+      } else {
+        throw new Error('Fetched data is not valid');
+      }
     } catch (err) {
       setError('Failed to fetch bridges.');
       toast.error('Failed to fetch bridges.');
@@ -32,35 +36,35 @@ function useBridges() {
     getBridges();
   }, [getBridges]);
 
-  const addBridge = useCallback(async (bridge: Omit<Bridges, 'id'>) => {
+  const addBridge = async (bridge: Omit<Bridges, 'id'>) => {
     setPendingBridge(true);
     setError(null);
     const toastId = toast.loading("Adding bridge...");
     try {
       const response = await httpAddBridge(bridge);
-      if (response.message === "Bridge added successfully") {
-        await getBridges();
-        toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 5000 });
+      if (response.message === "Bridge added successfully" && response.bridge) {
+        setBridges(prev => [...prev, response.bridge]);
+        toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 4000 });
       } else {
         setError(response.message);
         toast.update(toastId, { render: response.message, type: "error", isLoading: false, autoClose: 5000 });
       }
     } catch (err) {
       setError('Failed to add bridge.');
-      toast.update(toastId, { render: 'Failed to add bridge.', type: "error", isLoading: false, autoClose: 5000 });
+      toast.update(toastId, { render: 'Failed to add bridge.', type: "error", isLoading: false, autoClose: 4000 });
     } finally {
       setPendingBridge(false);
     }
-  }, [getBridges]);
+  };
 
-  const updateBridge = useCallback(async (id: number, bridge: Omit<Bridges, 'id'>) => {
+  const updateBridge = async (id: number, updatedBridge: Omit<Bridges, 'id'>) => {
     setPendingBridge(true);
     setError(null);
     const toastId = toast.loading("Updating bridge...");
     try {
-      const response = await httpUpdateBridge(id, bridge);
-      if (response.message === `Bridge with id ${id} updated successfully`) {
-        await getBridges();
+      const response = await httpUpdateBridge(id, updatedBridge);
+      if (response.message === `Bridge with id ${id} updated successfully` && response.bridge) {
+        setBridges(prev => prev.map(bridge => bridge.id === id ? response.bridge : bridge));
         toast.update(toastId, { render: "Bridge updated successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
         setError(response.message);
@@ -72,16 +76,16 @@ function useBridges() {
     } finally {
       setPendingBridge(false);
     }
-  }, [getBridges]);
+  };
 
-  const deleteBridge = useCallback(async (id: number) => {
+  const deleteBridge = async (id: number) => {
     setLoading(true);
     setError(null);
     const toastId = toast.loading("Deleting bridge...");
     try {
       const success = await httpDeleteBridge(id);
       if (success) {
-        await getBridges();
+        setBridges(prev => prev.filter(bridge => bridge.id !== id));
         toast.update(toastId, { render: "Bridge deleted successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
         setError(`Failed to delete bridge with id ${id}.`);
@@ -93,13 +97,14 @@ function useBridges() {
     } finally {
       setLoading(false);
     }
-  }, [getBridges]);
+  };
 
   return {
     bridges,
     isLoading,
     isPendingBridge,
     error,
+    getBridges,
     addBridge,
     updateBridge,
     deleteBridge,

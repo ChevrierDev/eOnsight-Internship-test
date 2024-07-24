@@ -2,8 +2,8 @@
 export interface Bridges {
     readonly id: number;
     name: string;
-    location: GeoLocation;
-    inspection_date: Date;
+    location: string;
+    inspection_date: string;
     status: Status;
     traffic_load: number;
 }
@@ -16,3 +16,19 @@ export interface GeoLocation {
 
 //Define Alias for status only allowed strings : "Good" | "Fair" | "Poor" | "Bad"
 export type Status = "Good" | "Fair" | "Poor" | "Bad"
+
+//Define type of API response
+export interface BridgeResponse {
+    results: Bridges[];
+}
+
+// pie charts type 
+export interface PieChartProps {
+    data: {
+      Good: number;
+      Fair: number;
+      Poor: number;
+      Bad: number;
+    };
+  }
+  

@@ -11,7 +11,9 @@ export default {
         pieChartPoor: "#900C3C",//pie chart colors for Poor bridges status
         pieChartBad: "#581A3F",//pie chart colors for Bad bridges status
         pieChartGood: "#F2BF1B",//pie chart colors for Good bridges status
-        bodyBg: "#1E1E1E",
+        tableBg: "#1E1E1E",
+        bodyBg: "#161616",
+        inputBg: "#202020",
         textSecondary: "#EAEAEA",
       },
       fontFamily: {
