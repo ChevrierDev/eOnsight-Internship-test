@@ -1,0 +1,35 @@
+# Environnements virtuels
+venv/
+env/
+djangoenv/
+
+#env file
+.env
+
+# Fichiers Python compilés
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Fichiers de log
+*.log
+
+# Bases de données locales
+*.sqlite3
+
+# Fichiers de migration
+*/migrations/__pycache__/
+*/migrations/*.pyc
+
+# Fichiers de configuration local de Django
+local_settings.py
+
+# Fichiers spécifiques à MacOS
+.DS_Store
+
+# Fichiers spécifiques à Windows
+Thumbs.db
+
+# Node modules (si vous utilisez Node.js ou React dans le projet)
+node_modules/
