@@ -7,6 +7,7 @@ import ConfirmationModal from '../components/ConfirmationModal';
 interface BridgeTableMobileProps {
   className?: string;
   bridges: Bridges[];
+  onEditBridgeClick: (bridge: Bridges) => void;
   onDeleteBridge: (id: number) => Promise<void>;
 }
 
@@ -15,7 +16,7 @@ const parseLocation = (location: string): string => {
   return match ? match[1] : location;
 };
 
-const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridges, onDeleteBridge }) => {
+const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridges, onEditBridgeClick, onDeleteBridge }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,8 +30,8 @@ const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridge
     setDropdownOpen(dropdownOpen === id ? null : id);
   };
 
-  const handleEditClick = (id: number) => {
-    console.log(`Edit clicked for bridge ID: ${id}`);
+  const handleEditClick = (bridge: Bridges) => {
+    onEditBridgeClick(bridge);
     setDropdownOpen(null);
   };
 
@@ -74,7 +75,7 @@ const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridge
       <div className='mt-4'>
         {filteredBridges.map((bridge) => (
           <div key={bridge.id} className="flex items-center justify-between bg-tableBg p-4 mb-4 border-b border-b-white/5">
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col">
               <h2 className="font-lato text-lg font-bold text-white space-y-2">{bridge.name}</h2>
               <p className="font-lato text-sm text-textSecondary/75">Location: {parseLocation(bridge.location)}</p>
               <p className="font-lato text-sm text-textSecondary/75">Inspection Date: {new Date(bridge.inspection_date).toLocaleDateString()}</p>
@@ -89,7 +90,7 @@ const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridge
                 <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-20">
                   <button
                     className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
-                    onClick={() => handleEditClick(bridge.id)}
+                    onClick={() => handleEditClick(bridge)}
                   >
                     Edit
                   </button>
