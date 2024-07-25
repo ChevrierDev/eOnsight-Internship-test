@@ -5,6 +5,7 @@ djangoenv/
 
 #env file
 .env
+client/.vite/deps/
 
 # Fichiers Python compilés
 *.pyc

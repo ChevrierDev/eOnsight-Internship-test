@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import SubmitButton from './SubmitButton';
 import { Status, Bridges } from '../types/index';
+import closeBtn from '../assets/closeBtn.svg';
 
 interface BridgeFormProps {
   className?: string;
   title: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onClose: () => void
   initialData?: Bridges | null;
 }
 
-const BridgeForm: React.FC<BridgeFormProps> = ({ className, title, onSubmit, initialData }) => {
+const BridgeForm: React.FC<BridgeFormProps> = ({ className, title, onSubmit, initialData, onClose }) => {
   const [name, setName] = useState('');
   const [latitude, setLatitude] = useState('');
   const [longitude, setLongitude] = useState('');
@@ -58,7 +60,12 @@ const BridgeForm: React.FC<BridgeFormProps> = ({ className, title, onSubmit, ini
 
   return (
     <div className={`flex flex-col p-7 bg-tableBg rounded-md ${className}`}>
-      <h1 className="text-lg font-lato text-white tracking-wide">{title}</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-lg font-lato text-white tracking-wide">{title}</h1>
+        <button onClick={onClose}>
+          <img src={closeBtn} alt="close button icon" />
+        </button>
+      </div>
       <form onSubmit={onSubmit} className='mt-5 space-y-4'>
         <div className='space-y-1'>
           <label htmlFor="name" className='font-lato text-textSecondary text-xs tracking-wider'>Bridge name</label>

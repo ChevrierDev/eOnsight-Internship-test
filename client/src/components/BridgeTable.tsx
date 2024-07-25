@@ -61,12 +61,14 @@ const BridgeTable: React.FC<BridgeTableProps> = ({ className, onAddBridgeClick, 
 
   return (
     <div className={`bg-tableBg rounded-md flex flex-col px-5 ${className}`}>
+      
       <div className="flex items-center justify-between w-full py-2">
         <div className='flex flex-col space-y-2'>
           <h1 className="font-lato tracking-wide font-bold text-base text-white">Bridge Status Overview</h1>
           <p className="font-lato tracking-wide text-sm text-textSecondary/75">Current Conditions and Traffic Data</p>
         </div>
-        <div className='text-white'>
+        {/* open add Bridges Form button */}
+        <div className=' text-white '>
           <OpenAddBridgeFormButton onClick={onAddBridgeClick} />
         </div>
       </div>

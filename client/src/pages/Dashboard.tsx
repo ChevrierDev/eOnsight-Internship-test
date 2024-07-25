@@ -7,6 +7,7 @@ import BridgeForm from '../components/BridgeForm.tsx';
 import useBridges from '../hooks/useBridges';
 import { Status, Bridges } from '../types/index.tsx';
 import { toast } from 'react-toastify';
+import BridgeTableMobile from '../components/BridgeTableMobile';
 
 const Dashboard: React.FC = () => {
   const { bridges, addBridge, updateBridge, deleteBridge } = useBridges();
@@ -18,6 +19,7 @@ const Dashboard: React.FC = () => {
   });
   const [isFormOpen, setFormOpen] = useState(false);
   const [bridgeToEdit, setBridgeToEdit] = useState<Bridges | null>(null);
+  const [activeButton, setActiveButton] = useState(0);
 
   useEffect(() => {
     const statusCount = { Good: 0, Fair: 0, Poor: 0, Bad: 0 };
@@ -28,6 +30,18 @@ const Dashboard: React.FC = () => {
     });
     setStatusData(statusCount);
   }, [bridges]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && isFormOpen) {
+        setFormOpen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [isFormOpen]);
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
@@ -46,6 +60,7 @@ const Dashboard: React.FC = () => {
     };
     await addBridge(newBridge);
     setFormOpen(false);
+    setActiveButton(0);
   };
 
   const handleEditBridge = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -62,44 +77,72 @@ const Dashboard: React.FC = () => {
       await updateBridge(bridgeToEdit.id, updatedBridge);
       setFormOpen(false);
       setBridgeToEdit(null);
+      setActiveButton(0);
     }
   };
 
   const handleEditBridgeClick = (bridge: Bridges) => {
     setBridgeToEdit(bridge);
     setFormOpen(true);
+    setActiveButton(0);
     toast.info('You are in edit mode');
   };
 
   const handleDeleteBridgeClick = async (id: number) => {
     await deleteBridge(id);
-    toast.info('Bridge deleted successfully');
+  };
+
+  const handleAddBridgeClick = () => {
+    setFormOpen(true);
+    setBridgeToEdit(null);
+    setActiveButton(1);
+    toast.info('You are in add mode');
+  };
+
+  const handleCloseForm = () => {
+    setFormOpen(false);
+    setBridgeToEdit(null);
+    setActiveButton(0);
   };
 
   return (
     <AppLayout>
-      <Header />
-      <div className='flex flex-col lg:flex-row justify-between space-x-4 px-4'>
+      <Header
+        onShowTable={() => setFormOpen(false)}
+        onShowForm={handleAddBridgeClick}
+        onShowChart={() => {
+          setFormOpen(false);
+          setActiveButton(2);
+        }}
+        activeButton={activeButton}
+        setActiveButton={setActiveButton}
+      />
+      <div className='flex flex-col lg:flex-row justify-between md:space-x-4 md:px-4'>
         <div className="flex flex-col w-full lg:w-full space-y-8">
-          <PieChart data={statusData} className="w-[25rem] h-[25rem] mx-auto lg:mx-auto " />
+          <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
           <BridgeTable
-            className='w-full'
-            onAddBridgeClick={() => {
-              setFormOpen(true);
-              setBridgeToEdit(null);
-              toast.info('You are in add mode');
-            }}
+            className='w-full hidden md:block'
+            onAddBridgeClick={handleAddBridgeClick}
             onEditBridgeClick={handleEditBridgeClick}
-            onDeleteBridgeClick={handleDeleteBridgeClick} // Pass handleDeleteBridgeClick to BridgeTable
+            onDeleteBridgeClick={handleDeleteBridgeClick}
             bridges={bridges}
           />
+          {!isFormOpen && (
+            <BridgeTableMobile
+              className={`w-full block md:hidden ${activeButton === 2 ? "hidden" : "block"}`}
+              bridges={bridges}
+              onEditBridgeClick={handleEditBridgeClick}
+              onDeleteBridge={handleDeleteBridgeClick}
+            />
+          )}
         </div>
         {isFormOpen && (
           <BridgeForm
             title={bridgeToEdit ? "Edit Bridge Form" : "Add Bridge Form"}
             onSubmit={bridgeToEdit ? handleEditBridge : handleAddBridge}
-            className='w-full lg:w-1/4'
+            className='w-full mt-4 lg:w-1/4 md:mt-0'
             initialData={bridgeToEdit}
+            onClose={handleCloseForm}
           />
         )}
       </div>
