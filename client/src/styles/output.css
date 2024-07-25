@@ -481,6 +481,12 @@ video {
 .mt-5{
   margin-top: 1.25rem;
 }
+.mt-10{
+  margin-top: 2.5rem;
+}
+.mt-20{
+  margin-top: 5rem;
+}
 .block{
   display: block;
 }
@@ -765,6 +771,10 @@ video {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+.text-buttonPrimary{
+  --tw-text-opacity: 1;
+  color: rgb(248 109 27 / var(--tw-text-opacity));
+}
 .text-gray-300{
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
@@ -806,7 +816,7 @@ video {
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
 
-/* change input calendar icon color */
+/* change date input icon color */
 input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(360deg);
 }
@@ -815,64 +825,64 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   --tw-text-opacity: 1;
   color: rgb(248 109 27 / var(--tw-text-opacity));
 }
-  
-  .group:hover .svg-hover path {
-    fill: var(--buttonPrimary);
-    stroke: var(--buttonPrimary);
-  }
-  
-  .group:hover .svg-hover g path {
-    fill: var(--buttonPrimary);
-    stroke: var(--buttonPrimary);
-  }
-  
-  .placeholder\:font-lato::-moz-placeholder{
+
+.group:hover .svg-hover path{
+  fill: #F86D1B;
+  stroke: #F86D1B;
+}
+
+.group:hover .svg-hover g path{
+  fill: #F86D1B;
+  stroke: #F86D1B;
+}
+
+.placeholder\:font-lato::-moz-placeholder{
   font-family: Lato, sans-serif;
 }
-  
-  .placeholder\:font-lato::placeholder{
+
+.placeholder\:font-lato::placeholder{
   font-family: Lato, sans-serif;
 }
-  
-  .placeholder\:text-white\/30::-moz-placeholder{
+
+.placeholder\:text-white\/30::-moz-placeholder{
   color: rgb(255 255 255 / 0.3);
 }
-  
-  .placeholder\:text-white\/30::placeholder{
+
+.placeholder\:text-white\/30::placeholder{
   color: rgb(255 255 255 / 0.3);
 }
-  
-  .hover\:scale-95:hover{
+
+.hover\:scale-95:hover{
   --tw-scale-x: .95;
   --tw-scale-y: .95;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-  
-  .hover\:bg-buttonPrimary\/50:hover{
+
+.hover\:bg-buttonPrimary\/50:hover{
   background-color: rgb(248 109 27 / 0.5);
 }
-  
-  .hover\:bg-gray-200:hover{
+
+.hover\:bg-gray-200:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity));
 }
-  
-  .hover\:bg-gray-700:hover{
+
+.hover\:bg-gray-700:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
 }
-  
-  .hover\:bg-red-500:hover{
+
+.hover\:bg-red-500:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
-  
-  .focus\:outline-none:focus{
+
+.focus\:outline-none:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
-  
-  @media (min-width: 768px){
+
+@media (min-width: 768px){
   .md\:mt-0{
     margin-top: 0px;
   }
@@ -920,8 +930,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     padding-left: 0px;
   }
 }
-  
-  @media (min-width: 1024px){
+
+@media (min-width: 1024px){
   .lg\:mx-auto{
     margin-left: auto;
     margin-right: auto;
@@ -936,4 +946,3 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     flex-direction: row;
   }
 }
-  

@@ -75,12 +75,12 @@ const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridge
       <div className='mt-4'>
         {filteredBridges.map((bridge) => (
           <div key={bridge.id} className="flex items-center justify-between bg-tableBg p-4 mb-4 border-b border-b-white/5">
-            <div className="flex flex-col">
-              <h2 className="font-lato text-lg font-bold text-white space-y-2">{bridge.name}</h2>
-              <p className="font-lato text-sm text-textSecondary/75">Location: {parseLocation(bridge.location)}</p>
-              <p className="font-lato text-sm text-textSecondary/75">Inspection Date: {new Date(bridge.inspection_date).toLocaleDateString()}</p>
-              <p className="font-lato text-sm text-textSecondary/75">Condition: {bridge.status}</p>
-              <p className="font-lato text-sm text-textSecondary/75">Traffic Load: {bridge.traffic_load}</p>
+            <div className="flex flex-col space-y-2">
+              <h2 className="font-lato text-lg font-bold text-white space-y-2 tracking-wide">{bridge.name}</h2>
+              <p className="font-lato text-sm text-textSecondary/75 tracking-wide">Location: {parseLocation(bridge.location)}</p>
+              <p className="font-lato text-sm text-textSecondary/75 tracking-wide">Inspection Date: {new Date(bridge.inspection_date).toLocaleDateString()}</p>
+              <p className="font-lato text-sm text-textSecondary/75 tracking-wide">Condition: {bridge.status}</p>
+              <p className="font-lato text-sm text-textSecondary/75 tracking-wide">Traffic Load: {bridge.traffic_load}</p>
             </div>
             <div className="relative">
               <button className="focus:outline-none" onClick={() => handleButtonClick(bridge.id)}>

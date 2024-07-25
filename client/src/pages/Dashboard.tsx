@@ -19,6 +19,7 @@ const Dashboard: React.FC = () => {
   });
   const [isFormOpen, setFormOpen] = useState(false);
   const [bridgeToEdit, setBridgeToEdit] = useState<Bridges | null>(null);
+  const [activeButton, setActiveButton] = useState(0);
 
   useEffect(() => {
     const statusCount = { Good: 0, Fair: 0, Poor: 0, Bad: 0 };
@@ -32,7 +33,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 868 && isFormOpen) {
+      if (window.innerWidth < 768 && isFormOpen) {
         setFormOpen(false);
       }
     };
@@ -59,6 +60,7 @@ const Dashboard: React.FC = () => {
     };
     await addBridge(newBridge);
     setFormOpen(false);
+    setActiveButton(0);
   };
 
   const handleEditBridge = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,12 +77,14 @@ const Dashboard: React.FC = () => {
       await updateBridge(bridgeToEdit.id, updatedBridge);
       setFormOpen(false);
       setBridgeToEdit(null);
+      setActiveButton(0);
     }
   };
 
   const handleEditBridgeClick = (bridge: Bridges) => {
     setBridgeToEdit(bridge);
     setFormOpen(true);
+    setActiveButton(0);
     toast.info('You are in edit mode');
   };
 
@@ -91,20 +95,31 @@ const Dashboard: React.FC = () => {
   const handleAddBridgeClick = () => {
     setFormOpen(true);
     setBridgeToEdit(null);
+    setActiveButton(1);
     toast.info('You are in add mode');
   };
 
   const handleCloseForm = () => {
     setFormOpen(false);
     setBridgeToEdit(null);
+    setActiveButton(0);
   };
 
   return (
     <AppLayout>
-      <Header />
+      <Header
+        onShowTable={() => setFormOpen(false)}
+        onShowForm={handleAddBridgeClick}
+        onShowChart={() => {
+          setFormOpen(false);
+          setActiveButton(2);
+        }}
+        activeButton={activeButton}
+        setActiveButton={setActiveButton}
+      />
       <div className='flex flex-col lg:flex-row justify-between md:space-x-4 md:px-4'>
         <div className="flex flex-col w-full lg:w-full space-y-8">
-          <PieChart data={statusData} className="hidden w-[25rem] h-[25rem] mx-auto lg:mx-auto md:block" />
+          <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
           <BridgeTable
             className='w-full hidden md:block'
             onAddBridgeClick={handleAddBridgeClick}
@@ -114,7 +129,7 @@ const Dashboard: React.FC = () => {
           />
           {!isFormOpen && (
             <BridgeTableMobile
-              className='w-full block md:hidden'
+              className={`w-full block md:hidden ${activeButton === 2 ? "hidden" : "block"}`}
               bridges={bridges}
               onEditBridgeClick={handleEditBridgeClick}
               onDeleteBridge={handleDeleteBridgeClick}
