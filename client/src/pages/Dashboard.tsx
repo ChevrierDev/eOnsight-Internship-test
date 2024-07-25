@@ -138,7 +138,7 @@ const Dashboard: React.FC = () => {
           <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
           
           {/* Desktop Bridge Table */}
-          <div className="pt-20">
+          <div className="md:pt-20">
             <BridgeTable
               className='w-full hidden md:block pt-3'
               onAddBridgeClick={handleAddBridgeClick}
