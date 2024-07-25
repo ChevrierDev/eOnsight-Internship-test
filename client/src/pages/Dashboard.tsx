@@ -30,6 +30,7 @@ const Dashboard: React.FC = () => {
   const [bridgeToEdit, setBridgeToEdit] = useState<Bridges | null>(null);
   const [activeButton, setActiveButton] = useState(0);
 
+  {/* Increment pie chart status with bridges data */}
   useEffect(() => {
     const statusCount = { Good: 0, Fair: 0, Poor: 0, Bad: 0 };
     allBridges.forEach((bridge) => {
@@ -40,6 +41,7 @@ const Dashboard: React.FC = () => {
     setStatusData(statusCount);
   }, [allBridges]);
 
+  {/* atomaticaly close form when reducing windows size*/}
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768 && isFormOpen) {
@@ -57,6 +59,7 @@ const Dashboard: React.FC = () => {
     return date.toISOString().split('T')[0];
   };
 
+  {/* Prepare data for post */}
   const handleAddBridge = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -72,6 +75,8 @@ const Dashboard: React.FC = () => {
     setActiveButton(0);
   };
 
+  
+  {/* Prepare data for updating */}
   const handleEditBridge = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -126,16 +131,24 @@ const Dashboard: React.FC = () => {
         activeButton={activeButton}
         setActiveButton={setActiveButton}
       />
-      <div className='flex flex-col lg:flex-row justify-between md:space-x-4 md:px-4'>
+
+      <div className='flex flex-col lg:flex-row justify-between md:space-x-4 md:px-0'>
         <div className="flex flex-col w-full lg:w-full space-y-8">
+          {/* Pie Chart section */}
           <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
-          <BridgeTable
-            className='w-full hidden md:block'
-            onAddBridgeClick={handleAddBridgeClick}
-            onEditBridgeClick={handleEditBridgeClick}
-            onDeleteBridgeClick={handleDeleteBridgeClick}
-            bridges={bridges}
-          />
+          
+          {/* Desktop Bridge Table */}
+          <div className="pt-20">
+            <BridgeTable
+              className='w-full hidden md:block pt-3'
+              onAddBridgeClick={handleAddBridgeClick}
+              onEditBridgeClick={handleEditBridgeClick}
+              onDeleteBridgeClick={handleDeleteBridgeClick}
+              bridges={bridges}
+            />
+          </div>
+       
+          {/* mobile Bridge Table */}
           {!isFormOpen && activeButton !== 2 && (
             <BridgeTableMobile
               className='w-full block md:hidden'
@@ -144,25 +157,10 @@ const Dashboard: React.FC = () => {
               onDeleteBridge={handleDeleteBridgeClick}
             />
           )}
-          {/* Pagination controls */}
-          <div className={`flex justify-center space-x-2  md:block md:mt-0 w-fit mx-auto ${activeButton === 2 || isFormOpen  ? "hidden" : "block"}`}>
-            <button
-              className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-            <span className="text-white py-2 px-4">{currentPage} / {totalPages}</span>
-            <button
-              className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
-              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
+          
         </div>
+        
+          {/*Bridge Form */}
         {isFormOpen && (
           <BridgeForm
             title={bridgeToEdit ? "Edit Bridge Form" : "Add Bridge Form"}
@@ -172,6 +170,25 @@ const Dashboard: React.FC = () => {
             onClose={handleCloseForm}
           />
         )}
+      </div>
+
+      {/* Pagination controls */}
+      <div className={`flex justify-center space-x-2  md:block md:mt-0 w-fit mx-auto pt-10 ${activeButton === 2 || isFormOpen  ? "hidden" : "block"}`}>
+        <button
+          className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
+        <span className="text-white py-2 px-4">{currentPage} / {totalPages}</span>
+        <button
+          className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
       </div>
     </AppLayout>
   );
