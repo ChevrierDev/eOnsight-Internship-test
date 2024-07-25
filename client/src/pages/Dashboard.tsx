@@ -10,7 +10,16 @@ import { toast } from 'react-toastify';
 import BridgeTableMobile from '../components/BridgeTableMobile';
 
 const Dashboard: React.FC = () => {
-  const { bridges, addBridge, updateBridge, deleteBridge } = useBridges();
+  const {
+    bridges,
+    allBridges,
+    addBridge,
+    updateBridge,
+    deleteBridge,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+  } = useBridges();
   const [statusData, setStatusData] = useState({
     Good: 0,
     Fair: 0,
@@ -23,13 +32,13 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     const statusCount = { Good: 0, Fair: 0, Poor: 0, Bad: 0 };
-    bridges.forEach((bridge) => {
+    allBridges.forEach((bridge) => {
       if (statusCount[bridge.status] !== undefined) {
         statusCount[bridge.status]++;
       }
     });
     setStatusData(statusCount);
-  }, [bridges]);
+  }, [allBridges]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -135,6 +144,24 @@ const Dashboard: React.FC = () => {
               onDeleteBridge={handleDeleteBridgeClick}
             />
           )}
+          {/* Pagination controls */}
+          <div className={`flex justify-center space-x-2  md:block md:mt-0 w-fit mx-auto ${activeButton === 2 || isFormOpen  ? "hidden" : "block"}`}>
+            <button
+              className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+            >
+              Previous
+            </button>
+            <span className="text-white py-2 px-4">{currentPage} / {totalPages}</span>
+            <button
+              className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
+              onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+            >
+              Next
+            </button>
+          </div>
         </div>
         {isFormOpen && (
           <BridgeForm

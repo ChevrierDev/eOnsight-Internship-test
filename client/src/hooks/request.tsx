@@ -3,13 +3,23 @@ import { Bridges, BridgeResponse } from '../types';
 
 const API_URL = 'http://127.0.0.1:8000/api/v1/bridges/';
 
-async function httpGetBridges(): Promise<BridgeResponse> {
+async function httpGetBridges(page = 1): Promise<BridgeResponse> {
+  try {
+    const response = await axios.get<BridgeResponse>(API_URL, { params: { page } });
+    return response.data;
+  } catch (err) {
+    console.error('Error fetching bridges:', err);
+    return { count: 0, results: [] };
+  }
+}
+
+async function httpGetAllBridges(): Promise<BridgeResponse> {
   try {
     const response = await axios.get<BridgeResponse>(API_URL);
     return response.data;
   } catch (err) {
-    console.error('Error fetching bridges:', err);
-    return { results: [] };
+    console.error('Error fetching all bridges:', err);
+    return { count: 0, results: [] };
   }
 }
 
@@ -59,4 +69,5 @@ export {
   httpAddBridge,
   httpUpdateBridge,
   httpDeleteBridge,
+  httpGetAllBridges
 };

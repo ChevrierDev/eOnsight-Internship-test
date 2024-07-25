@@ -6,24 +6,25 @@ export interface Bridges {
     inspection_date: string;
     status: Status;
     traffic_load: number;
-}
+  }
   
-//Define types for geo-spatial locations
-export interface GeoLocation {
+  //Define types for geo-spatial locations
+  export interface GeoLocation {
     latitude: number;
     longitude: number;
-}
-
-//Define Alias for status only allowed strings : "Good" | "Fair" | "Poor" | "Bad"
-export type Status = "Good" | "Fair" | "Poor" | "Bad"
-
-//Define type of API response
-export interface BridgeResponse {
+  }
+  
+  //Define Alias for status only allowed strings : "Good" | "Fair" | "Poor" | "Bad"
+  export type Status = "Good" | "Fair" | "Poor" | "Bad";
+  
+  //Define type of API response
+  export interface BridgeResponse {
+    count: number;
     results: Bridges[];
-}
-
-// pie charts type 
-export interface PieChartProps {
+  }
+  
+  // pie charts type 
+  export interface PieChartProps {
     data: {
       Good: number;
       Fair: number;
