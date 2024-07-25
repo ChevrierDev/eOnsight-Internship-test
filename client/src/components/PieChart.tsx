@@ -14,7 +14,9 @@ const PieChart: React.FC<PieChartProps & { className?: string }> = ({ data, clas
         data: [data.Good, data.Fair, data.Poor, data.Bad],
         backgroundColor: ['#F2BF1B', '#F86D1B', '#900C3C', '#581A3F'],
       },
+      
     ],
+    hoverOffset: 10,
   };
 
   const options = {
