@@ -127,9 +127,9 @@ const Dashboard: React.FC = () => {
             onDeleteBridgeClick={handleDeleteBridgeClick}
             bridges={bridges}
           />
-          {!isFormOpen && (
+          {!isFormOpen && activeButton !== 2 && (
             <BridgeTableMobile
-              className={`w-full block md:hidden ${activeButton === 2 ? "hidden" : "block"}`}
+              className='w-full block md:hidden'
               bridges={bridges}
               onEditBridgeClick={handleEditBridgeClick}
               onDeleteBridge={handleDeleteBridgeClick}
