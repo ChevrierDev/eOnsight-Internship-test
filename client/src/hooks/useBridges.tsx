@@ -11,7 +11,7 @@ import { Bridges, BridgeResponse } from '../types';
 
 function useBridges() {
   const [bridges, setBridges] = useState<Bridges[]>([]);
-  const [allBridges, setAllBridges] = useState<Bridges[]>([]); // Pour le graphique à secteurs
+  const [allBridges, setAllBridges] = useState<Bridges[]>([]); 
   const [isLoading, setLoading] = useState(false);
   const [isPendingBridge, setPendingBridge] = useState(false);
   const [error, setError] = useState<string | null>(null);
