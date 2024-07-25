@@ -16,3 +16,4 @@ class BridgeList(generics.ListCreateAPIView):
 class BridgeDetails(generics.RetrieveUpdateDestroyAPIView):
     queryset = Bridge.objects.all()
     serializer_class = BridgeSerializers
+

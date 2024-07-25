@@ -8,5 +8,5 @@ class BridgeFilter(django_filters.FilterSet):
         fields = {
             'status': ['exact'],
             'inspection_date': ['exact'],
-            'traffic_load': ['gt', 'lt'],  
+            'traffic_load': ['gte', 'lte'],  
         }
