@@ -475,17 +475,14 @@ video {
 .mt-2{
   margin-top: 0.5rem;
 }
+.mt-20{
+  margin-top: 5rem;
+}
 .mt-4{
   margin-top: 1rem;
 }
 .mt-5{
   margin-top: 1.25rem;
-}
-.mt-10{
-  margin-top: 2.5rem;
-}
-.mt-20{
-  margin-top: 5rem;
 }
 .block{
   display: block;
@@ -547,6 +544,10 @@ video {
 .w-\[90\%\]{
   width: 90%;
 }
+.w-fit{
+  width: -moz-fit-content;
+  width: fit-content;
+}
 .w-full{
   width: 100%;
 }
@@ -555,6 +556,9 @@ video {
 }
 .flex-1{
   flex: 1 1 0%;
+}
+.cursor-pointer{
+  cursor: pointer;
 }
 .resize{
   resize: both;
@@ -624,6 +628,9 @@ video {
 }
 .rounded-md{
   border-radius: 0.375rem;
+}
+.border{
+  border-width: 1px;
 }
 .border-b{
   border-bottom-width: 1px;
@@ -723,6 +730,15 @@ video {
 }
 .pr-4{
   padding-right: 1rem;
+}
+.pt-10{
+  padding-top: 2.5rem;
+}
+.pt-20{
+  padding-top: 5rem;
+}
+.pt-3{
+  padding-top: 0.75rem;
 }
 .pt-4{
   padding-top: 1rem;
@@ -877,6 +893,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-white\/20:hover{
+  background-color: rgb(255 255 255 / 0.2);
+}
+
 .focus\:outline-none:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -918,16 +938,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .md\:p-4{
     padding: 1rem;
   }
+  .md\:px-0{
+    padding-left: 0px;
+    padding-right: 0px;
+  }
   .md\:px-2{
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
-  .md\:px-4{
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
   .md\:pl-0{
     padding-left: 0px;
+  }
+  .md\:pt-20{
+    padding-top: 5rem;
   }
 }
 

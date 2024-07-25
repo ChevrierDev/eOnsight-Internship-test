@@ -4,9 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "cd client && npm run dev",
+    "client-css": "cd client && npm run watch-css",
+    "server": "cd server && .\\djangoenv\\Scripts\\activate && python manage.py runserver",
+    "dev": "concurrently \"npm run server\" \"npm run client\" \"npm run client-css\""
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

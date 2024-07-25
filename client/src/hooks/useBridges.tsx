@@ -2,25 +2,30 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   httpGetBridges,
+  httpGetAllBridges,
   httpAddBridge,
   httpUpdateBridge,
   httpDeleteBridge,
 } from './request';
-import { Bridges } from '../types';
+import { Bridges, BridgeResponse } from '../types';
 
 function useBridges() {
   const [bridges, setBridges] = useState<Bridges[]>([]);
+  const [allBridges, setAllBridges] = useState<Bridges[]>([]); 
   const [isLoading, setLoading] = useState(false);
   const [isPendingBridge, setPendingBridge] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
-  const getBridges = useCallback(async () => {
+  const getBridges = useCallback(async (page = 1) => {
     setLoading(true);
     setError(null);
     try {
-      const response = await httpGetBridges();
+      const response: BridgeResponse = await httpGetBridges(page);
       if (response && Array.isArray(response.results)) {
         setBridges(response.results);
+        setTotalPages(Math.ceil(response.count / 10));
       } else {
         throw new Error('Fetched data is not valid');
       }
@@ -32,9 +37,28 @@ function useBridges() {
     }
   }, []);
 
+  const getAllBridges = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response: BridgeResponse = await httpGetAllBridges();
+      if (response && Array.isArray(response.results)) {
+        setAllBridges(response.results);
+      } else {
+        throw new Error('Fetched data is not valid');
+      }
+    } catch (err) {
+      setError('Failed to fetch all bridges.');
+      toast.error('Failed to fetch all bridges.');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   useEffect(() => {
-    getBridges();
-  }, [getBridges]);
+    getBridges(currentPage);
+    getAllBridges();
+  }, [getBridges, getAllBridges, currentPage]);
 
   const addBridge = async (bridge: Omit<Bridges, 'id'>) => {
     setPendingBridge(true);
@@ -43,7 +67,8 @@ function useBridges() {
     try {
       const response = await httpAddBridge(bridge);
       if (response.message === "Bridge added successfully" && response.bridge) {
-        setBridges(prev => [...prev, response.bridge]);
+        getBridges(currentPage);
+        getAllBridges();
         toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 4000 });
       } else {
         setError(response.message);
@@ -64,7 +89,8 @@ function useBridges() {
     try {
       const response = await httpUpdateBridge(id, updatedBridge);
       if (response.message === `Bridge with id ${id} updated successfully` && response.bridge) {
-        setBridges(prev => prev.map(bridge => bridge.id === id ? response.bridge : bridge));
+        getBridges(currentPage);
+        getAllBridges();
         toast.update(toastId, { render: "Bridge updated successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
         setError(response.message);
@@ -85,7 +111,8 @@ function useBridges() {
     try {
       const success = await httpDeleteBridge(id);
       if (success) {
-        setBridges(prev => prev.filter(bridge => bridge.id !== id));
+        getBridges(currentPage);
+        getAllBridges();
         toast.update(toastId, { render: "Bridge deleted successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
         setError(`Failed to delete bridge with id ${id}.`);
@@ -101,9 +128,13 @@ function useBridges() {
 
   return {
     bridges,
+    allBridges,
     isLoading,
     isPendingBridge,
     error,
+    currentPage,
+    totalPages,
+    setCurrentPage,
     getBridges,
     addBridge,
     updateBridge,
