@@ -24,8 +24,8 @@ Chart.js: JavaScript library for creating charts, used for the pie chart visuali
 
 ## Local Setup
 ### Prerequisites
-Node.js: Ensure you have Node.js latest v installed (https://nodejs.org/).
-Python: Ensure you have Python  latest v installed (https://www.python.org/).
+Node.js: Ensure you have Node.js latest v installed (https://nodejs.org/). <br>
+Python: Ensure you have Python  latest v installed (https://www.python.org/).<br>
 PostgreSQL: Ensure you have PostgreSQL latest v installed (https://www.postgresql.org/).
 
 ### Important Setup Instructions
@@ -53,9 +53,10 @@ python verify_import_csv_to_db.py
 
 ### Next Steps
 Now that your database is set up and populated, you can proceed to set up the client and server environments. Detailed instructions for setting up these environments can be found in the respective README files located in the server and client directories.
-Please refer to these README files for the following:
-<a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/client/README.md'>Client Setup Instructions</a>
-Server Setup Instructions 
+Please refer to these README files for the following: <br> 
+<a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/client/README.md'>Client Setup Instructions</a> <br>
+<a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/server/README.md'>Server Setup Instructions </a>
+
 
 
 The next instructions you will see in this README will focus on setting up the root environment of the project.
