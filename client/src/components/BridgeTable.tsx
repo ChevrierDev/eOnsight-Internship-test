@@ -6,6 +6,8 @@ import { parseLocation } from '../utils/parseLocation';
 import ConfirmationModal from '../components/ConfirmationModal';
 import iconFilter from "../assets/filterIcon.svg";
 import search from "../assets/search.svg";
+import garbageIcon from "../assets/garbageIcon.svg";
+import editIcon from "../assets/editIcon.svg";
 
 interface BridgeTableProps {
   className?: string;
@@ -172,19 +174,23 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
                       {dropdownOpen === index && (
                         <div className="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg z-20">
                           <button
-                            className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
+                            className="flex items-center space-x-2 w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
                             onClick={() => {
                               onEditBridgeClick(bridge);
                               setDropdownOpen(null); 
                             }}
                           >
-                            Edit
+                            <img src={editIcon} alt="edit Icon"  />
+                            <p> 
+                              Edit
+                            </p>
                           </button>
                           <button
-                            className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
+                            className="flex items-center space-x-2 w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
                             onClick={() => handleDeleteClick(bridge.id)}
                           >
-                            Delete
+                            <img src={garbageIcon} alt="garbage icon"  />
+                            <p>Delete</p>
                           </button>
                         </div>
                       )}
