@@ -15,7 +15,7 @@ PostgreSQL: Database for storing bridge data.<br>
 PostGIS: Extension to PostgreSQL that provides geospatial data support.<br>
 Python: for backend logic.<br>
 Django: Web framework for building the backend.<br>
-Django REST Framework: Toolkit for building Web API<br>.
+Django REST Framework: Toolkit for building Web API.
 ### Frontend
 React.js: JavaScript library for building the user interface.<br>
 TypeScript: Superset of JavaScript for adding static types.<br>
