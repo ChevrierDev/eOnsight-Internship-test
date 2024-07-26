@@ -156,6 +156,7 @@ python manage.py migrate
 
 ```
 This command will apply all the necessary database migrations to set up your database schema according to your Django models.<br>
+<br>
 4- Start the Server:
 ```
 python manage.py runserver
