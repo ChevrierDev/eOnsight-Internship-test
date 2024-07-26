@@ -45,7 +45,7 @@ cd full-stack-assessment-test-candidate
 python import_csv_to_db.py
 
 ```
-After executing the script, you can verify that the data has been correctly imported by running the<a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/verify_import_csv_to_db.py'>verify_import_csv_to_db.py</a>script:
+After executing the script, you can verify that the data has been correctly imported by running the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/verify_import_csv_to_db.py'>verify_import_csv_to_db.py</a> script:
 ```
 python verify_import_csv_to_db.py
 
