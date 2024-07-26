@@ -27,6 +27,7 @@ Chart.js: JavaScript library for creating charts, used for the pie chart visuali
 Node.js: Ensure you have Node.js latest v installed (https://nodejs.org/). <br>
 Python: Ensure you have Python  latest v installed (https://www.python.org/).<br>
 PostgreSQL: Ensure you have PostgreSQL latest v installed (https://www.postgresql.org/).
+OSGeo4W: You will need to download OSGeo4W from (https://trac.osgeo.org/osgeo4w/).OSGeo4W is necessary for handling geospatial data and libraries in my setup. You can install it now or wait until the server setup phase, where the README will provide detailed instructions on its configuration and use.
 
 ### Important Setup Instructions
 Before setting up the client or server environments, you must read the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/SETUP_DATABASE.md'>SETUP_DATABASE.md</a> file located in the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/tree/main/full-stack-assessment-test-candidate'>full-stack-assessment-test-candidate directory</a>. This file contains detailed instructions on how to set up the database, which must be ready before proceeding with the client or server setup.
