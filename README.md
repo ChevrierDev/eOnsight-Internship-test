@@ -4,22 +4,22 @@
 This project is a web application for monitoring the status of various bridges, including their inspection dates, conditions, traffic loads, and geospatial locations. The application provides features such as filtering, searching, and a pie chart visualization of bridge conditions. Additionally, it includes a map for visualizing bridge locations based on geospatial data.
 
 ## Features
-Bridge Table: View and manage bridges, including adding, editing, and deleting entries.
-Filtering and Searching: Filter bridges by inspection date, status, and traffic load, and search by bridge name.
-Pie Chart Visualization: Visualize the distribution of bridge conditions using Chart.js.
+Bridge Table: View and manage bridges, including adding, editing, and deleting entries.<br>
+Filtering and Searching: Filter bridges by inspection date, status, and traffic load, and search by bridge name.<br>
+Pie Chart Visualization: Visualize the distribution of bridge conditions using Chart.js.<br>
 Map Localization: Display bridge locations on a map using geospatial data.
 
 ## Technologies Used
 ### Backend
-PostgreSQL: Database for storing bridge data.
-PostGIS: Extension to PostgreSQL that provides geospatial data support.
-Python: for backend logic.
-Django: Web framework for building the backend.
-Django REST Framework: Toolkit for building Web API.
+PostgreSQL: Database for storing bridge data.<br>
+PostGIS: Extension to PostgreSQL that provides geospatial data support.<br>
+Python: for backend logic.<br>
+Django: Web framework for building the backend.<br>
+Django REST Framework: Toolkit for building Web API<br>.
 ### Frontend
-React.js: JavaScript library for building the user interface.
-TypeScript: Superset of JavaScript for adding static types.
-TailwindCSS: Utility-first CSS framework for styling.
+React.js: JavaScript library for building the user interface.<br>
+TypeScript: Superset of JavaScript for adding static types.<br>
+TailwindCSS: Utility-first CSS framework for styling.<br>
 Chart.js: JavaScript library for creating charts, used for the pie chart visualization.
 
 ## Local Setup
@@ -33,8 +33,8 @@ Before setting up the client or server environments, you must read the SETUP_DAT
 After setting up the database, refer to the README files in the client and server directories for further instructions on how to set up each environment.
 
 ### Populate Data base
-Once the database is set up, you can populate it by executing the import_csv_to_db.py file located in the full-stack-assessment-test-candidate directory.
-1- Open your terminal or command prompt.
+Once the database is set up, you can populate it by executing the import_csv_to_db.py file located in the full-stack-assessment-test-candidate directory.<br>
+1- Open your terminal or command prompt.<br>
 2- Navigate to the full-stack-assessment-test-candidate directory by running the following command from the root directory:
 ```
 cd full-stack-assessment-test-candidate
@@ -63,9 +63,9 @@ The next instructions you will see in this README will focus on setting up the r
 
 ## Root Directory Setup
 #### Install Dependencies
-To set up the root directory, you need to install the necessary dependencies. This project uses concurrently to manage multiple processes simultaneously, such as running the client, server, and Tailwind CSS watcher.
-1- Open a terminal.
-2- Navigate to the root directory of the project.
+To set up the root directory, you need to install the necessary dependencies. This project uses concurrently to manage multiple processes simultaneously, such as running the client, server, and Tailwind CSS watcher.<br>
+1- Open a terminal.<br>
+2- Navigate to the root directory of the project.<br>
 3- Run the following command to install the dependencies listed in the package.json file:
 ```
 npm install
