@@ -26,7 +26,7 @@ Chart.js: JavaScript library for creating charts, used for the pie chart visuali
 ### Prerequisites
 Node.js: Ensure you have Node.js latest v installed (https://nodejs.org/). <br>
 Python: Ensure you have Python  latest v installed (https://www.python.org/).<br>
-PostgreSQL: Ensure you have PostgreSQL latest v installed (https://www.postgresql.org/).
+PostgreSQL: Ensure you have PostgreSQL latest v installed (https://www.postgresql.org/).<br>
 OSGeo4W: You will need to download OSGeo4W from (https://trac.osgeo.org/osgeo4w/).OSGeo4W is necessary for handling geospatial data and libraries in my setup. You can install it now or wait until the server setup phase, where the README will provide detailed instructions on its configuration and use.
 
 ### Important Setup Instructions
