@@ -1,0 +1,4 @@
+name,latitude,longitude,inspection_date,status,traffic_load
+Golden Gate Bridge,37.7749,-122.4194,2023-01-01,Good,15000
+Brooklyn Bridge,34.0522,-118.2437,2023-02-15,Fair,10000
+London Bridge,40.7128,-74.0060,2023-03-10,Poor,5000
