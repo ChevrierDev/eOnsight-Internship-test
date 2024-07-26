@@ -29,11 +29,11 @@ Python: Ensure you have Python  latest v installed (https://www.python.org/).<br
 PostgreSQL: Ensure you have PostgreSQL latest v installed (https://www.postgresql.org/).
 
 ### Important Setup Instructions
-Before setting up the client or server environments, you must read the SETUP_DATABASE.md file located in the full-stack-assessment-test-candidate directory. This file contains detailed instructions on how to set up the database, which must be ready before proceeding with the client or server setup.
+Before setting up the client or server environments, you must read the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/SETUP_DATABASE.md'>SETUP_DATABASE.md</a> file located in the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/tree/main/full-stack-assessment-test-candidate'>full-stack-assessment-test-candidate directory</a>. This file contains detailed instructions on how to set up the database, which must be ready before proceeding with the client or server setup.
 After setting up the database, refer to the README files in the client and server directories for further instructions on how to set up each environment.
 
 ### Populate Data base
-Once the database is set up, you can populate it by executing the import_csv_to_db.py file located in the full-stack-assessment-test-candidate directory.<br>
+Once the database is set up, you can populate it by executing the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/import_csv_to_db.py'>import_csv_to_db.py</a> file located in the <a href='https://github.com/ChevrierDev/eOnsight-Internship-test/tree/main/full-stack-assessment-test-candidate'>full-stack-assessment-test-candidate directory</a>.<br>
 1- Open your terminal or command prompt.<br>
 2- Navigate to the full-stack-assessment-test-candidate directory by running the following command from the root directory:
 ```
@@ -45,7 +45,7 @@ cd full-stack-assessment-test-candidate
 python import_csv_to_db.py
 
 ```
-After executing the script, you can verify that the data has been correctly imported by running the verify_import_csv_to_db.py script:
+After executing the script, you can verify that the data has been correctly imported by running the<a href='https://github.com/ChevrierDev/eOnsight-Internship-test/blob/main/full-stack-assessment-test-candidate/verify_import_csv_to_db.py'>verify_import_csv_to_db.py</a>script:
 ```
 python verify_import_csv_to_db.py
 
