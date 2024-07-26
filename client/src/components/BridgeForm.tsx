@@ -7,7 +7,7 @@ interface BridgeFormProps {
   className?: string;
   title: string;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  onClose: () => void
+  onClose: () => void;
   initialData?: Bridges | null;
 }
 
@@ -21,6 +21,7 @@ const BridgeForm: React.FC<BridgeFormProps> = ({ className, title, onSubmit, ini
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // initialize form fields with initial data if provided
   useEffect(() => {
     if (initialData) {
       setName(initialData.name);
@@ -40,17 +41,20 @@ const BridgeForm: React.FC<BridgeFormProps> = ({ className, title, onSubmit, ini
     }
   }, [initialData]);
 
+  // handle status change from dropdown menu
   const handleStatusChange = (newStatus: Status) => {
     setStatus(newStatus);
     setDropdownOpen(false);
   };
 
+  // close dropdown if clicked outside
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
       setDropdownOpen(false);
     }
   };
 
+  // add event listener for clicks outside dropdown
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {

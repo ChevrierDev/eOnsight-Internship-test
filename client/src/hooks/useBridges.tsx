@@ -6,23 +6,27 @@ import {
   httpAddBridge,
   httpUpdateBridge,
   httpDeleteBridge,
+  httpGetFilteredBridges,
+  httpSearchBridgesByName,
 } from './request';
-import { Bridges, BridgeResponse } from '../types';
+import { Bridges, BridgeResponse, FilterParams } from '../types';
 
 function useBridges() {
   const [bridges, setBridges] = useState<Bridges[]>([]);
-  const [allBridges, setAllBridges] = useState<Bridges[]>([]); 
+  const [allBridges, setAllBridges] = useState<Bridges[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [isPendingBridge, setPendingBridge] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const getBridges = useCallback(async (page = 1) => {
+  // fetch bridges with pagination and search term
+  const getBridges = useCallback(async (page = 1, search = '', noPagination = false) => {
     setLoading(true);
     setError(null);
     try {
-      const response: BridgeResponse = await httpGetBridges(page);
+      const response: BridgeResponse = await httpGetBridges(page, search, noPagination);
       if (response && Array.isArray(response.results)) {
         setBridges(response.results);
         setTotalPages(Math.ceil(response.count / 10));
@@ -37,6 +41,7 @@ function useBridges() {
     }
   }, []);
 
+  // fetch all bridges without pagination
   const getAllBridges = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -55,11 +60,44 @@ function useBridges() {
     }
   }, []);
 
-  useEffect(() => {
-    getBridges(currentPage);
-    getAllBridges();
-  }, [getBridges, getAllBridges, currentPage]);
+  // handle search input change
+  const handleSearchChange = (newSearchTerm: string) => {
+    setSearchTerm(newSearchTerm);
+    if (newSearchTerm.trim()) {
+      searchBridgesByName(newSearchTerm);
+    } else {
+      getBridges(1, '');
+    }
+  };
 
+  // fetch bridges by name
+  const searchBridgesByName = async (name: string) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response: Bridges[] = await httpSearchBridgesByName(name);
+      setBridges(response);
+      setTotalPages(1);
+    } catch (err) {
+      setError('Failed to fetch bridges by name.');
+      toast.error('Failed to fetch bridges by name.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // initial fetch for bridges and all bridges
+  useEffect(() => {
+    if (!searchTerm) {
+      getBridges(currentPage, searchTerm);
+    }
+  }, [getBridges, currentPage, searchTerm]);
+
+  useEffect(() => {
+    getAllBridges();
+  }, [getAllBridges]);
+
+  // add a new bridge
   const addBridge = async (bridge: Omit<Bridges, 'id'>) => {
     setPendingBridge(true);
     setError(null);
@@ -67,7 +105,7 @@ function useBridges() {
     try {
       const response = await httpAddBridge(bridge);
       if (response.message === "Bridge added successfully" && response.bridge) {
-        getBridges(currentPage);
+        getBridges(currentPage, searchTerm);
         getAllBridges();
         toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 4000 });
       } else {
@@ -82,6 +120,7 @@ function useBridges() {
     }
   };
 
+  // update an existing bridge
   const updateBridge = async (id: number, updatedBridge: Omit<Bridges, 'id'>) => {
     setPendingBridge(true);
     setError(null);
@@ -89,7 +128,7 @@ function useBridges() {
     try {
       const response = await httpUpdateBridge(id, updatedBridge);
       if (response.message === `Bridge with id ${id} updated successfully` && response.bridge) {
-        getBridges(currentPage);
+        getBridges(currentPage, searchTerm);
         getAllBridges();
         toast.update(toastId, { render: "Bridge updated successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
@@ -104,6 +143,7 @@ function useBridges() {
     }
   };
 
+  // delete an existing bridge
   const deleteBridge = async (id: number) => {
     setLoading(true);
     setError(null);
@@ -111,7 +151,7 @@ function useBridges() {
     try {
       const success = await httpDeleteBridge(id);
       if (success) {
-        getBridges(currentPage);
+        getBridges(currentPage, searchTerm);
         getAllBridges();
         toast.update(toastId, { render: "Bridge deleted successfully", type: "success", isLoading: false, autoClose: 5000 });
       } else {
@@ -126,6 +166,26 @@ function useBridges() {
     }
   };
 
+  // apply filters to the bridge list
+  const applyFilters = async (filters: FilterParams) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response: BridgeResponse = await httpGetFilteredBridges(filters);
+      if (response && Array.isArray(response.results)) {
+        setBridges(response.results);
+        setTotalPages(Math.ceil(response.count / 10));
+      } else {
+        throw new Error('Fetched data is not valid');
+      }
+    } catch (err) {
+      setError('Failed to apply filters.');
+      toast.error('Failed to apply filters.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     bridges,
     allBridges,
@@ -135,10 +195,15 @@ function useBridges() {
     currentPage,
     totalPages,
     setCurrentPage,
+    searchTerm,
+    setSearchTerm,
     getBridges,
     addBridge,
     updateBridge,
     deleteBridge,
+    applyFilters,
+    handleSearchChange,  
+    searchBridgesByName
   };
 }
 

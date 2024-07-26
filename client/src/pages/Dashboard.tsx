@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import AppLayout from './AppLayouts.tsx';
-import BridgeTable from '../components/BridgeTable.tsx';
+import AppLayout from './AppLayouts';
+import BridgeTable from '../components/BridgeTable';
 import Header from '../components/Header';
-import PieChart from '../components/PieChart.tsx';
-import BridgeForm from '../components/BridgeForm.tsx';
+import PieChart from '../components/PieChart';
+import BridgeForm from '../components/BridgeForm';
+import FilterForm from '../components/FilterForm';
 import useBridges from '../hooks/useBridges';
-import { Status, Bridges } from '../types/index.tsx';
+import { Status, Bridges } from '../types';
 import { toast } from 'react-toastify';
 import BridgeTableMobile from '../components/BridgeTableMobile';
 
 const Dashboard: React.FC = () => {
+  // custom hook to manage bridge data and actions
   const {
     bridges,
     allBridges,
@@ -19,18 +21,24 @@ const Dashboard: React.FC = () => {
     currentPage,
     totalPages,
     setCurrentPage,
+    applyFilters,
+    handleSearchChange, 
   } = useBridges();
+
+  // state to manage bridge status data for the pie chart
   const [statusData, setStatusData] = useState({
     Good: 0,
     Fair: 0,
     Poor: 0,
     Bad: 0,
   });
+
   const [isFormOpen, setFormOpen] = useState(false);
   const [bridgeToEdit, setBridgeToEdit] = useState<Bridges | null>(null);
   const [activeButton, setActiveButton] = useState(0);
+  const [isFilterFormVisible, setFilterFormVisible] = useState(false);
 
-  {/* Increment pie chart status with bridges data */}
+  // update status data when allBridges changes
   useEffect(() => {
     const statusCount = { Good: 0, Fair: 0, Poor: 0, Bad: 0 };
     allBridges.forEach((bridge) => {
@@ -41,7 +49,7 @@ const Dashboard: React.FC = () => {
     setStatusData(statusCount);
   }, [allBridges]);
 
-  {/* atomaticaly close form when reducing windows size*/}
+  // handle window resize events to close the form on smaller screens
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768 && isFormOpen) {
@@ -59,7 +67,7 @@ const Dashboard: React.FC = () => {
     return date.toISOString().split('T')[0];
   };
 
-  {/* Prepare data for post */}
+  // handle form submission for adding a bridge
   const handleAddBridge = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -75,8 +83,7 @@ const Dashboard: React.FC = () => {
     setActiveButton(0);
   };
 
-  
-  {/* Prepare data for updating */}
+  // handle form submission for editing a bridge
   const handleEditBridge = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -95,6 +102,7 @@ const Dashboard: React.FC = () => {
     }
   };
 
+  // handle click to edit a bridge
   const handleEditBridgeClick = (bridge: Bridges) => {
     setBridgeToEdit(bridge);
     setFormOpen(true);
@@ -102,10 +110,12 @@ const Dashboard: React.FC = () => {
     toast.info('You are in edit mode');
   };
 
+  // handle click to delete a bridge
   const handleDeleteBridgeClick = async (id: number) => {
     await deleteBridge(id);
   };
 
+  // handle click to open the add bridge form
   const handleAddBridgeClick = () => {
     setFormOpen(true);
     setBridgeToEdit(null);
@@ -113,20 +123,30 @@ const Dashboard: React.FC = () => {
     toast.info('You are in add mode');
   };
 
+  // handle closing the form
   const handleCloseForm = () => {
     setFormOpen(false);
     setBridgeToEdit(null);
     setActiveButton(0);
   };
 
+  // handle showing the filter form
+  const handleShowFilterForm = () => {
+    setFilterFormVisible(!isFilterFormVisible);
+  };
+
   return (
     <AppLayout>
       <Header
-        onShowTable={() => setFormOpen(false)}
+        onShowTable={() => {
+          setFormOpen(false);
+          setFilterFormVisible(false);
+        }}
         onShowForm={handleAddBridgeClick}
         onShowChart={() => {
           setFormOpen(false);
           setActiveButton(2);
+          setFilterFormVisible(false);
         }}
         activeButton={activeButton}
         setActiveButton={setActiveButton}
@@ -134,33 +154,41 @@ const Dashboard: React.FC = () => {
 
       <div className='flex flex-col lg:flex-row justify-between md:space-x-4 md:px-0'>
         <div className="flex flex-col w-full lg:w-full space-y-8">
-          {/* Pie Chart section */}
-          <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
-          
-          {/* Desktop Bridge Table */}
+          <div className="flex">
+            {isFilterFormVisible && (
+              < FilterForm
+                className={` mx-auto mt-10 md:w-[20%] md:mx-0 md:ml-4 ${isFilterFormVisible ? "block" : "hidden"}`}
+                handleFilterForm={applyFilters}
+                onClose={() => setFilterFormVisible(false)}
+              />
+            )}
+            <PieChart data={statusData} className={`w-[25rem] h-[25rem] mx-auto mt-20 lg:mx-auto ${activeButton === 2 ? "block" : "hidden"} md:block md:mt-0`} />
+          </div>
+
           <div className="md:pt-20">
             <BridgeTable
-              className='w-full hidden md:block pt-3'
+              className={`w-full hidden md:block pt-3`}
               onAddBridgeClick={handleAddBridgeClick}
               onEditBridgeClick={handleEditBridgeClick}
               onDeleteBridgeClick={handleDeleteBridgeClick}
               bridges={bridges}
+              onFilterButtonClick={handleShowFilterForm}
+              isFilterFormVisible={isFilterFormVisible}
+              onSearchChange={handleSearchChange}  
             />
           </div>
-       
-          {/* mobile Bridge Table */}
+
           {!isFormOpen && activeButton !== 2 && (
             <BridgeTableMobile
-              className='w-full block md:hidden'
+              className={`w-full block md:hidden ${isFilterFormVisible ? "hidden" : "block"}`}
               bridges={bridges}
               onEditBridgeClick={handleEditBridgeClick}
               onDeleteBridge={handleDeleteBridgeClick}
+              onShowFilterForm={handleShowFilterForm}
+              onSearchChange={handleSearchChange}  
             />
           )}
-          
         </div>
-        
-          {/*Bridge Form */}
         {isFormOpen && (
           <BridgeForm
             title={bridgeToEdit ? "Edit Bridge Form" : "Add Bridge Form"}
@@ -172,8 +200,7 @@ const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* Pagination controls */}
-      <div className={`flex justify-center space-x-2  md:block md:mt-0 w-fit mx-auto pt-10 ${activeButton === 2 || isFormOpen  ? "hidden" : "block"}`}>
+      <div className={`flex justify-center space-x-2 md:block md:mt-0 w-fit mx-auto pt-10 ${activeButton === 2 || isFormOpen || isFilterFormVisible ? "hidden" : "block"}`}>
         <button
           className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

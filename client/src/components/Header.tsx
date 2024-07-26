@@ -9,7 +9,9 @@ interface HeaderProps {
   setActiveButton: React.Dispatch<React.SetStateAction<number>>;
 }
 
+
 const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, activeButton, setActiveButton }) => {
+  // handle button click to switch views
   const handleButtonClick = (index: number) => {
     setActiveButton(index);
     if (index === 0) {
@@ -22,6 +24,7 @@ const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, a
   };
 
   useEffect(() => {
+    // handle window resize to reset active button
     const handleResize = () => {
       if (window.innerWidth < 768) {
         setActiveButton(0);
@@ -29,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, a
     };
 
     window.addEventListener('resize', handleResize);
-    handleResize(); 
+    handleResize();
 
     return () => {
       window.removeEventListener('resize', handleResize);

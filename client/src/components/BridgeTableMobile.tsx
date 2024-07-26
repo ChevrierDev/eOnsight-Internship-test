@@ -3,12 +3,15 @@ import { Bridges } from '../types/index';
 import search from '../assets/search.svg';
 import action from '../assets/action.svg';
 import ConfirmationModal from '../components/ConfirmationModal';
+import iconFilter from '../assets/filterIcon.svg';
 
 interface BridgeTableMobileProps {
   className?: string;
   bridges: Bridges[];
   onEditBridgeClick: (bridge: Bridges) => void;
   onDeleteBridge: (id: number) => Promise<void>;
+  onShowFilterForm: () => void;
+  onSearchChange: (searchTerm: string) => void;
 }
 
 const parseLocation = (location: string): string => {
@@ -16,14 +19,23 @@ const parseLocation = (location: string): string => {
   return match ? match[1] : location;
 };
 
-const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridges, onEditBridgeClick, onDeleteBridge }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({
+  className,
+  bridges,
+  onEditBridgeClick,
+  onDeleteBridge,
+  onShowFilterForm,
+  onSearchChange,
+}) => {
+  const [searchTerm, setSearchTerm] = useState<string>('');  // Make sure searchTerm is defined as an empty string initially
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bridgeToDelete, setBridgeToDelete] = useState<number | null>(null);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    const newSearchTerm = event.target.value;
+    setSearchTerm(newSearchTerm);
+    onSearchChange(newSearchTerm); 
   };
 
   const handleButtonClick = (id: number) => {
@@ -60,18 +72,26 @@ const BridgeTableMobile: React.FC<BridgeTableMobileProps> = ({ className, bridge
           <h1 className="font-lato tracking-wide font-bold text-base text-white">Bridge Status Overview</h1>
           <p className="font-lato tracking-wide text-sm text-textSecondary/75">Current Conditions and Traffic Data</p>
         </div>
-        <div className="relative block text-white md:hidden">
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            className="pl-8 pr-4 py-2 rounded-full bg-gray-700 text-white placeholder-text-gray-300 focus:outline-none"
-          />
-          <img src={search} alt="search input" className="absolute left-2 top-2 w-5 h-5" />
+        
+        <div className="flex flex-col items-end justify-center space-y-2.5">
+          <div className="relative block text-white md:hidden">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleSearchChange}
+              className="pl-8 pr-4 py-2 rounded-full bg-gray-700 text-white placeholder-text-gray-300 focus:outline-none"
+            />
+            <img src={search} alt="search input" className="absolute left-2 top-2 w-5 h-5" />
+          </div>
+          
+          <button className='flex space-x-2.5 mr-2' onClick={onShowFilterForm}>
+            <img src={iconFilter} alt="filter icon" />
+            <p className="font-lato font-bold text-white">Filters</p>
+          </button>
         </div>
       </div>
-
+      
       <div className='mt-4'>
         {filteredBridges.map((bridge) => (
           <div key={bridge.id} className="flex items-center justify-between bg-tableBg p-4 mb-4 border-b border-b-white/5">
