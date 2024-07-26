@@ -2,7 +2,7 @@
 venv/
 env/
 djangoenv/
-
+#env
 #env file
 .env
 client/.vite/deps/
