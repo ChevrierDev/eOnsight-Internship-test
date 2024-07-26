@@ -447,17 +447,11 @@ video {
 .right-0{
   right: 0px;
 }
-.top-2{
-  top: 0.5rem;
-}
-.right-2{
-  right: 0.5rem;
-}
-.right-5{
-  right: 1.25rem;
-}
 .right-4{
   right: 1rem;
+}
+.top-2{
+  top: 0.5rem;
 }
 .z-10{
   z-index: 10;
@@ -474,9 +468,6 @@ video {
 }
 .ml-10{
   margin-left: 2.5rem;
-}
-.ml-4{
-  margin-left: 1rem;
 }
 .mr-2{
   margin-right: 0.5rem;
@@ -498,18 +489,6 @@ video {
 }
 .mt-5{
   margin-top: 1.25rem;
-}
-.mr-3{
-  margin-right: 0.75rem;
-}
-.mr-1{
-  margin-right: 0.25rem;
-}
-.mr-1\.5{
-  margin-right: 0.375rem;
-}
-.mr-2\.5{
-  margin-right: 0.625rem;
 }
 .block{
   display: block;
@@ -553,6 +532,9 @@ video {
 .w-32{
   width: 8rem;
 }
+.w-4\/12{
+  width: 33.333333%;
+}
 .w-48{
   width: 12rem;
 }
@@ -577,18 +559,6 @@ video {
 }
 .w-full{
   width: 100%;
-}
-.w-\[50\%\]{
-  width: 50%;
-}
-.w-8\/12{
-  width: 66.666667%;
-}
-.w-3\/12{
-  width: 25%;
-}
-.w-4\/12{
-  width: 33.333333%;
 }
 .min-w-full{
   min-width: 100%;
@@ -660,6 +630,11 @@ video {
   margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
+.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
+}
 .space-y-4 > :not([hidden]) ~ :not([hidden]){
   --tw-space-y-reverse: 0;
   margin-top: calc(1rem * calc(1 - var(--tw-space-y-reverse)));
@@ -669,11 +644,6 @@ video {
   --tw-space-y-reverse: 0;
   margin-top: calc(2rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
-}
-.space-y-2\.5 > :not([hidden]) ~ :not([hidden]){
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.625rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.625rem * var(--tw-space-y-reverse));
 }
 .divide-y > :not([hidden]) ~ :not([hidden]){
   --tw-divide-y-reverse: 0;
@@ -742,10 +712,6 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
-.bg-red-500{
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
-}
 .bg-cover{
   background-size: cover;
 }
@@ -799,6 +765,9 @@ video {
 .pb-10{
   padding-bottom: 2.5rem;
 }
+.pb-2\.5{
+  padding-bottom: 0.625rem;
+}
 .pl-5{
   padding-left: 1.25rem;
 }
@@ -816,12 +785,6 @@ video {
 }
 .pt-4{
   padding-top: 1rem;
-}
-.pb-2{
-  padding-bottom: 0.5rem;
-}
-.pb-2\.5{
-  padding-bottom: 0.625rem;
 }
 .text-left{
   text-align: left;
