@@ -138,7 +138,7 @@ TEST_DB_PASSWORD=your_test_db_password
 ```
 
 ### Running Migrations and Starting the Server
-After setting up your .env file and configuring your database settings, you can proceed with running the database migrations and starting the server
+After setting up your .env file and configuring your database settings, you can proceed with running the database migrations and starting the server<br>
 1- Return to Your Server root Directory<br>
 2- Activate the Virtual Environment:
 ```
@@ -155,7 +155,7 @@ source djangoenv/bin/activate
 python manage.py migrate
 
 ```
-This command will apply all the necessary database migrations to set up your database schema according to your Django models.
+This command will apply all the necessary database migrations to set up your database schema according to your Django models.<br>
 4- Start the Server:
 ```
 python manage.py runserver
@@ -171,7 +171,7 @@ Congratulations! You have successfully completed the server setup. Here is a qui
 2- Downloaded Dependencies: You installed the dependencies from requirements.txt.<br>
 3- Configured Environment Variables: You created a .env file with your database credentials.<br>
 4- Verified GDAL and GEOS Libraries: You ensured that the paths for the GDAL and GEOS libraries are correctly set in settings.py.<br>
-5- an Database Migrations: You applied the necessary database migrations to set up your database schema.<br>
+5- A Database Migrations: You applied the necessary database migrations to set up your database schema.<br>
 6- Started the Server: You started the Django development server.<br>
 
 Your development environment is now ready, and your server is up and running. You can start building and testing your application. If you have any further questions or need additional configurations, refer to the project's documentation or seek assistance from the development community.
