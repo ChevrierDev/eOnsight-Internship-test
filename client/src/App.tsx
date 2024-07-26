@@ -12,7 +12,7 @@ const App: React.FC = () => {
     <div className="app">
       <ToastContainer
         position="top-right"
-        autoClose={4000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

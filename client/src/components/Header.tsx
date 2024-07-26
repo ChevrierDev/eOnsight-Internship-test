@@ -46,7 +46,7 @@ const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, a
       {/* Mobile nav menu */}
       <div className="flex items-center justify-around w-[60%] md:hidden mx-auto">
         {/* Go to bridges table btn */}
-        <button className="group w-10 h-10" onClick={() => handleButtonClick(0)}>
+        <button className="group w-10 h-10" aria-label="Show Table"  onClick={() => handleButtonClick(0)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -66,7 +66,7 @@ const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, a
         </button>
 
         {/* Go to add bridges form btn */}
-        <button className="group w-10 h-10" onClick={() => handleButtonClick(1)}>
+        <button className="group w-10 h-10" aria-label="Show Form" onClick={() => handleButtonClick(1)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -82,7 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onShowTable, onShowForm, onShowChart, a
         </button>
 
         {/* Go to piecharts btn */}
-        <button className="group w-10 h-10" onClick={() => handleButtonClick(2)}>
+        <button className="group w-10 h-10" aria-label="Show Chart" onClick={() => handleButtonClick(2)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"

@@ -4,7 +4,7 @@ import CloseIcon from '../assets/closeBtn.svg';
 interface FilterFormProps {
     handleFilterForm: (filters: { 
         inspection_date?: string; 
-        status?: 'Good' | 'Fair' | 'Bad' | 'Poor'; 
+        status?: 'Good' | 'Fair' | 'Bad' | 'Poor' | ''; 
         traffic_load_min?: number | ''; 
         traffic_load_max?: number | ''; 
     }) => void;
@@ -13,7 +13,7 @@ interface FilterFormProps {
 
 const FilterForm: React.FC<FilterFormProps & { className?: string }> = ({ handleFilterForm, onClose, className }) => {
     const [inspection_date, setInspectionDate] = useState('');
-    const [status, setStatus] = useState<'Good' | 'Fair' | 'Bad' | 'Poor' | undefined>();
+    const [status, setStatus] = useState<'Good' | 'Fair' | 'Bad' | 'Poor' | ''>('');
     const [traffic_load_min, setTrafficLoadMin] = useState<number | ''>('');
     const [traffic_load_max, setTrafficLoadMax] = useState<number | ''>('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -28,7 +28,7 @@ const FilterForm: React.FC<FilterFormProps & { className?: string }> = ({ handle
     // Handle reset form
     const handleReset = () => {
         setInspectionDate('');
-        setStatus(undefined);
+        setStatus('');
         setTrafficLoadMin('');
         setTrafficLoadMax('');
         handleFilterForm({ inspection_date: '', status: undefined, traffic_load_min: '', traffic_load_max: '' });

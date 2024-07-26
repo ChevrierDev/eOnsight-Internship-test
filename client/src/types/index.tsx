@@ -37,7 +37,7 @@ export interface PieChartProps {
 export interface FilterParams {
   inspection_date?: string;
   name?: string;
-  status?: 'Good' | 'Fair' | 'Bad' | 'Poor';
+  status?: 'Good' | 'Fair' | 'Bad' | 'Poor' | '';
   traffic_load_min?: number | '';
   traffic_load_max?: number | '';
 }

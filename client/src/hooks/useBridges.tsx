@@ -107,14 +107,14 @@ function useBridges() {
       if (response.message === "Bridge added successfully" && response.bridge) {
         getBridges(currentPage, searchTerm);
         getAllBridges();
-        toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 4000 });
+        toast.update(toastId, { render: "Bridge added successfully", type: "success", isLoading: false, autoClose: 1500 });
       } else {
         setError(response.message);
-        toast.update(toastId, { render: response.message, type: "error", isLoading: false, autoClose: 5000 });
+        toast.update(toastId, { render: response.message, type: "error", isLoading: false, autoClose: 1500 });
       }
     } catch (err) {
       setError('Failed to add bridge.');
-      toast.update(toastId, { render: 'Failed to add bridge.', type: "error", isLoading: false, autoClose: 4000 });
+      toast.update(toastId, { render: 'Failed to add bridge.', type: "error", isLoading: false, autoClose: 1500 });
     } finally {
       setPendingBridge(false);
     }
@@ -130,14 +130,14 @@ function useBridges() {
       if (response.message === `Bridge with id ${id} updated successfully` && response.bridge) {
         getBridges(currentPage, searchTerm);
         getAllBridges();
-        toast.update(toastId, { render: "Bridge updated successfully", type: "success", isLoading: false, autoClose: 5000 });
+        toast.update(toastId, { render: "Bridge updated successfully", type: "success", isLoading: false, autoClose: 1500 });
       } else {
         setError(response.message);
-        toast.update(toastId, { render: response.message, type: "error", isLoading: false, autoClose: 5000 });
+        toast.update(toastId, { render: response.message, type: "error", isLoading: false, autoClose: 1500 });
       }
     } catch (err) {
       setError(`Failed to update bridge with id ${id}.`);
-      toast.update(toastId, { render: `Failed to update bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 5000 });
+      toast.update(toastId, { render: `Failed to update bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 1500 });
     } finally {
       setPendingBridge(false);
     }
@@ -153,14 +153,14 @@ function useBridges() {
       if (success) {
         getBridges(currentPage, searchTerm);
         getAllBridges();
-        toast.update(toastId, { render: "Bridge deleted successfully", type: "success", isLoading: false, autoClose: 5000 });
+        toast.update(toastId, { render: "Bridge deleted successfully", type: "success", isLoading: false, autoClose: 1500 });
       } else {
         setError(`Failed to delete bridge with id ${id}.`);
-        toast.update(toastId, { render: `Failed to delete bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 5000 });
+        toast.update(toastId, { render: `Failed to delete bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 1500 });
       }
     } catch (err) {
       setError(`Failed to delete bridge with id ${id}.`);
-      toast.update(toastId, { render: `Failed to delete bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 5000 });
+      toast.update(toastId, { render: `Failed to delete bridge with id ${id}.`, type: "error", isLoading: false, autoClose: 1500 });
     } finally {
       setLoading(false);
     }

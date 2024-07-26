@@ -188,7 +188,9 @@ const Dashboard: React.FC = () => {
               onSearchChange={handleSearchChange}  
             />
           )}
+
         </div>
+
         {isFormOpen && (
           <BridgeForm
             title={bridgeToEdit ? "Edit Bridge Form" : "Add Bridge Form"}
@@ -198,6 +200,7 @@ const Dashboard: React.FC = () => {
             onClose={handleCloseForm}
           />
         )}
+
       </div>
 
       <div className={`flex justify-center space-x-2 md:block md:mt-0 w-fit mx-auto pt-10 ${activeButton === 2 || isFormOpen || isFilterFormVisible ? "hidden" : "block"}`}>
@@ -208,7 +211,9 @@ const Dashboard: React.FC = () => {
         >
           Previous
         </button>
+
         <span className="text-white py-2 px-4">{currentPage} / {totalPages}</span>
+        
         <button
           className="text-white font-lato border font-bold py-2 px-4 rounded-md hover:scale-95 hover:bg-white/20 duration-200 ease-out cursor-pointer"
           onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
