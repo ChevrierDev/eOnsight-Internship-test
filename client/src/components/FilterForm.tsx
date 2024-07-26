@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CloseIcon from '../assets/closeBtn.svg';
 
 interface FilterFormProps {
@@ -18,23 +18,48 @@ const FilterForm: React.FC<FilterFormProps & { className?: string }> = ({ handle
     const [traffic_load_max, setTrafficLoadMax] = useState<number | ''>('');
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    // handle form submission
+    // Handle form submission
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         handleFilterForm({ inspection_date, status, traffic_load_min, traffic_load_max });
         onClose();
     };
 
-    // toggle dropdown menu
+    // Handle reset form
+    const handleReset = () => {
+        setInspectionDate('');
+        setStatus(undefined);
+        setTrafficLoadMin('');
+        setTrafficLoadMax('');
+        handleFilterForm({ inspection_date: '', status: undefined, traffic_load_min: '', traffic_load_max: '' });
+        onClose();
+    };
+
+    // Toggle dropdown menu
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
 
-    // handle status selection from dropdown
+    // Handle status selection from dropdown
     const handleStatusSelect = (selectedStatus: 'Good' | 'Fair' | 'Bad' | 'Poor') => {
         setStatus(selectedStatus);
         setDropdownOpen(false);
     };
+
+    // Close filter form on window resize
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                onClose();
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [onClose]);
 
     return (
         <div className={className}>
@@ -136,9 +161,15 @@ const FilterForm: React.FC<FilterFormProps & { className?: string }> = ({ handle
                         </div>
                     </div>
                 </div>
-
-                <button className='w-[90%] bg-buttonPrimary py-2 mx-auto rounded-md font-lato text-white font-bold tracking-wide hover:scale-95 duration-200 ease-out'>
+                        
+                <button type="submit" className='w-[90%] bg-buttonPrimary py-2 mx-auto rounded-md font-lato text-white font-bold tracking-wide hover:scale-95 duration-200 ease-out'>
                     Filtrer
+                </button>
+
+                <button type="button" className='mx-auto' onClick={handleReset}>
+                    <p className="text-white tracking-wider font-lato text-sm underline hover:text-buttonPrimary duration-200">
+                        Reset
+                    </p>
                 </button>
             </form>
         </div>
