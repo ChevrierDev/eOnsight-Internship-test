@@ -1,12 +1,15 @@
-import django_filters;
-from .models import Bridge;
+import django_filters
+from .models import Bridge
 
-#create filter to enhance data manipulation
 class BridgeFilter(django_filters.FilterSet):
+    # filter for name with case insensitive containment
+    name = django_filters.CharFilter(field_name='name', lookup_expr='icontains') 
+
     class Meta:
         model = Bridge
         fields = {
-            'status': ['exact'],
+            'status': ['exact'], 
             'inspection_date': ['exact'],
-            'traffic_load': ['gt', 'lt'],  
+            'traffic_load': ['gte', 'lte'], 
+            'name': ['icontains'],  
         }

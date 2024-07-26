@@ -10,6 +10,7 @@ interface ConfirmationModalProps {
 const ConfirmationModal: React.FC<ConfirmationModalProps> = ({ isOpen, onRequestClose, onConfirm }) => {
   const modalRef = useRef<HTMLDivElement>(null);
 
+  // Scroll to the modal when it opens
   useEffect(() => {
     if (isOpen && modalRef.current) {
       modalRef.current.scrollIntoView({ behavior: 'smooth' });
