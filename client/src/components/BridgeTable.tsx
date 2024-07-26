@@ -8,6 +8,8 @@ import iconFilter from "../assets/filterIcon.svg";
 import search from "../assets/search.svg";
 import garbageIcon from "../assets/garbageIcon.svg";
 import editIcon from "../assets/editIcon.svg";
+import locateIcon from "../assets/locateIcon.svg";
+import Map from '../components/Map';
 
 interface BridgeTableProps {
   className?: string;
@@ -17,22 +19,23 @@ interface BridgeTableProps {
   bridges: Bridges[];
   onFilterButtonClick: () => void;
   isFilterFormVisible: boolean;
-  onSearchChange: (searchTerm: string) => void; 
+  onSearchChange: (searchTerm: string) => void;
 }
 
-const BridgeTable: React.FC<BridgeTableProps> = ({ 
-  className, 
-  onAddBridgeClick, 
-  onEditBridgeClick, 
-  onDeleteBridgeClick, 
-  onFilterButtonClick, 
-  bridges, 
-  onSearchChange  
+const BridgeTable: React.FC<BridgeTableProps> = ({
+  className,
+  onAddBridgeClick,
+  onEditBridgeClick,
+  onDeleteBridgeClick,
+  onFilterButtonClick,
+  bridges,
+  onSearchChange
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [bridgeToDelete, setBridgeToDelete] = useState<number | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');  
+  const [showMap, setShowMap] = useState<{ latitude: number, longitude: number } | null>(null);
   const dropdownRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   // toggle dropdown menu for actions
@@ -83,9 +86,35 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newSearchTerm = event.target.value;
     setSearchTerm(newSearchTerm);
-    onSearchChange(newSearchTerm);  
+    onSearchChange(newSearchTerm);
   };
 
+  // handle showing the map
+  const handleShowMap = (latitude: number, longitude: number) => {
+    setShowMap({ latitude, longitude });
+  };
+
+  // handle closing the map
+  const handleCloseMap = () => {
+    setShowMap(null);
+  };
+
+   // close the action dropdown if the screen is smaller than 768px
+   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setDropdownOpen(null); 
+      }
+    };
+  
+    window.addEventListener('resize', handleResize);
+  
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  // input filter bridges by name
   const filteredBridges = bridges.filter((bridge) =>
     bridge.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -103,8 +132,8 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
           <input
             type="text"
             placeholder="Search"
-            value={searchTerm}  
-            onChange={handleSearchChange} 
+            value={searchTerm}
+            onChange={handleSearchChange}
             className="pl-8 pr-4 py-2 rounded-full bg-gray-700 text-white placeholder-text-gray-300 w-full focus:outline-none"
           />
         </div>
@@ -181,9 +210,7 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
                             }}
                           >
                             <img src={editIcon} alt="edit Icon"  />
-                            <p> 
-                              Edit
-                            </p>
+                            <p>Edit</p>
                           </button>
                           <button
                             className="flex items-center space-x-2 w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
@@ -191,6 +218,13 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
                           >
                             <img src={garbageIcon} alt="garbage icon"  />
                             <p>Delete</p>
+                          </button>
+                          <button
+                            className="flex items-center space-x-2 w-full text-left px-4 py-2 text-black hover:bg-gray-200 font-lato tracking-wide rounded-lg"
+                            onClick={() => handleShowMap(latitude, longitude)}
+                          >
+                            <img src={locateIcon} alt="locate icon"  />
+                            <p>Locate</p>
                           </button>
                         </div>
                       )}
@@ -207,6 +241,20 @@ const BridgeTable: React.FC<BridgeTableProps> = ({
         onRequestClose={() => setIsModalOpen(false)}
         onConfirm={confirmDelete}
       />
+      {showMap && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative bg-white p-4 rounded-lg w-3/4 h-3/4">
+            <button
+              onClick={handleCloseMap}
+              className="absolute top-2 right-2 text-black bg-gray-200 rounded-full p-1"
+              style={{ zIndex: 1000 }}
+            >
+              &times;
+            </button>
+            <Map latitude={showMap.latitude} longitude={showMap.longitude} onCloseMap={handleCloseMap}/>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

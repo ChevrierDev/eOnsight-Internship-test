@@ -14,9 +14,7 @@ const PieChart: React.FC<PieChartProps & { className?: string }> = ({ data, clas
         data: [data.Good, data.Fair, data.Poor, data.Bad],
         backgroundColor: ['#F2BF1B', '#F86D1B', '#900C3C', '#581A3F'],
       },
-      
     ],
-    hoverOffset: 10,
   };
 
   const options = {
@@ -25,7 +23,7 @@ const PieChart: React.FC<PieChartProps & { className?: string }> = ({ data, clas
       legend: {
         position: 'top' as const,
         labels: {
-          color: 'white', 
+          color: 'white',
           font: {
             size: 12,
           },
@@ -50,11 +48,21 @@ const PieChart: React.FC<PieChartProps & { className?: string }> = ({ data, clas
         },
       },
     },
+    hoverOffset: 3,
+    animation: {
+      animateRotate: true,
+      animateScale: true,
+      duration: 1000,
+    },
   };
 
   return (
     <div className={className}>
-      <Pie data={chartData} options={options} />
+      <Pie
+        data={chartData}
+        options={options}
+       
+      />
     </div>
   );
 };

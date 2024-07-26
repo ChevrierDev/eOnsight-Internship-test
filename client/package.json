@@ -15,6 +15,7 @@
     "@fortawesome/fontawesome-free": "^6.6.0",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
+    "dotenv": "^16.4.5",
     "mapbox-gl": "^3.5.2",
     "postcss-cli": "^11.0.0",
     "react": "^18.3.1",
@@ -24,6 +25,7 @@
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@types/node": "^20.14.12",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-modal": "^3.16.3",
@@ -37,6 +39,7 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.2.2",
-    "vite": "^5.3.4"
+    "vite": "^5.3.4",
+    "react-error-overlay": "6.0.9"  
   }
 }
