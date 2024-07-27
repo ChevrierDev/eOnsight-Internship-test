@@ -9,7 +9,7 @@ npm install
 This command will install all the dependencies required for the client-side application to run correctly.
 
 ## Important: Setting Up Mapbox for Location Feature
-To use the "Locate" action button, which will display a map with the precise latitude and longitude of each bridge, you need to set up the Mapbox API. Mapbox(https://www.mapbox.com/) offers a free tier with 50,000 map loads per month, which should be sufficient for development and testing purposes.
+To use the "Locate" action button, which will display a map with the precise latitude and longitude of each bridge, you need to set up the Mapbox API.<br> Mapbox(https://www.mapbox.com/) offers a free tier with 50,000 map loads per month, which should be sufficient for development and testing purposes.<br>
 1- Generate a Mapbox Access Token: <br>
 Go to the Mapbox website and sign up or log in.<br>
 Navigate to your account and generate a new access token.<br>
