@@ -1,4 +1,4 @@
-# eOnsight-Internship-test local deployement instruction
+# eOnsight-test local deployement instruction
 
 ## Bridge Status Dashboard
 This project is a web application for monitoring the status of various bridges, including their inspection dates, conditions, traffic loads, and geospatial locations. The application provides features such as filtering, searching, and a pie chart visualization of bridge conditions. Additionally, it includes a map for visualizing bridge locations based on geospatial data.
